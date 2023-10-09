@@ -10,29 +10,33 @@ export const Demo = () => {
 
 	return (
 		<div className="container">
-			<ul className="list-group">
-				{store.demo.map((item, index) => {
-					return (
-						<li
-							key={index}
-							className="list-group-item d-flex justify-content-between"
-							style={{ background: item.background }}>
-							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link>
-							{// Conditional render example
-							// Check to see if the background is orange, if so, display the message
-							item.background === "orange" ? (
-								<p style={{ color: item.initial }}>
-									Check store/flux.js scroll to the actions to see the code
-								</p>
-							) : null}
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
-						</li>
-					);
-				})}
+			<h1>to-do's</h1>
+			<ul>
+				<li>
+					<input 
+					className="input"
+					type='text' 
+					placeholder='What needs to be done?' 
+					// value={items} 
+					// onChange={(e) => setItems(e.target.value)} 
+					// onKeyDown={addItemToList}
+					>
+					</input>
+				</li>
+				{store.demo.map((todo, index) => 
+					(<li id={index}>
+						<span
+						className="hide"
+						// onClick={() => setAddToList(addToList.filter((t, currentIndex) => index != currentIndex))}
+						>
+							<i class="fa-solid fa-eraser"></i>
+						</span>
+						<input 
+						type="checkbox"
+						className="checkbox"/> 
+						<label>{todo.title}</label>
+					</li>))
+				}
 			</ul>
 			<br />
 			<Link to="/">

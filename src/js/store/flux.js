@@ -1,40 +1,66 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			todos: [
-				{
-					done: false,
-					id: 1,
-					label: "example task"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+  return {
+    store: {
+      todos: [
+      ],
+      inputValue: "",
+      APIurl: "https://playground.4geeks.com/apis/fake/todos/user/cdkelly",
+    },
+    actions: {
+      getAPI: async () => {
+        const store = getStore();
+        try {
+          const response = await fetch(store.APIurl);
+          const APITodos = await response.json();
+          setStore({ todos: APITodos });
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+      addTodo: async (todo) => {
+        try {
+          const store = getStore();
+          const idx = store.todos.length;
+          const newTodo = {
+            done: false,
+            id: idx,
+            label: todo,
+          };
+		  let newTodos = store.todos.concat(newTodo);
+          const response = await fetch(store.APIurl, {
+            method: "PUT",
+            cache: "no-cache",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newTodos)
+            // json: true,
+          });
+        } catch (error) {
+          console.log("error", error);
+        }
+        getActions().getAPI();
+      },
+	  deleteTodo: async (index) => {
+		try {
+			const store = getStore();
+			let newTodos = store.todos.filter((t, currentIndex) => index != currentIndex);
+			const response = await fetch(store.APIurl, {
+			  method: "PUT",
+			  cache: "no-cache",
+			  headers: {
+				"Content-Type": "application/json",
+			  },
+			  body: JSON.stringify(newTodos)
+			  // json: true,
+			});
+		  } catch (error) {
+			console.log("error", error);
+		  }
+		  getActions().getAPI();
+	  }
+    },
+  };
 };
 
 export default getState;

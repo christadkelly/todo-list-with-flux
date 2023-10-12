@@ -5,6 +5,13 @@ import { Context } from "../store/appContext";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const [inputValue, setInputValue] = useState("");
+	const createToDo = (e) => {
+		if ( e.key == "Enter" && inputValue != "" ){
+			actions.addTodo(inputValue)
+			setInputValue("")
+		}
+	}
 
 	return (
 		<div className="container">
@@ -15,9 +22,9 @@ export const Home = () => {
 					className="input"
 					type='text' 
 					placeholder='What needs to be done?' 
-					// value={items} 
-					// onChange={(e) => setItems(e.target.value)} 
-					// onKeyDown={addItemToList}
+					value={inputValue} 
+					onChange={(e) => setInputValue(e.target.value)} 
+					onKeyPress={(e) => createToDo(e)}
 					>
 					</input>
 				</li>
@@ -25,7 +32,7 @@ export const Home = () => {
 					(<li id={index}>
 						<span
 						className="hide"
-						// onClick={() => setAddToList(addToList.filter((t, currentIndex) => index != currentIndex))}
+						onClick={() => actions.deleteTodo(index)}
 						>
 							<i class="fa-solid fa-eraser"></i>
 						</span>

@@ -1,0 +1,61 @@
+body {
+    margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: Snow;
+}
+
+h1 {
+    text-align: center;
+}
+
+ul {
+    background-color: Snow;
+    padding: 0px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    box-shadow: 10px 10px lightblue;
+}
+
+.input {
+    border: none;
+    width: 100%;
+}
+
+li {
+    display: flex;
+    list-style: none;
+    padding: 5px;
+    margin: none;
+    background-color: White;
+}
+
+li:nth-child(2n) {
+	background-color: rgb(238, 251, 255);
+}
+
+li:hover .hide {
+    display: block;
+}
+
+span {
+    float: right; 
+    border: none;
+    margin-right: 5px;
+}
+
+.hide {
+    display: none;
+}
+
+.checkbox {
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+label {
+    margin-left: 5px;
+}
